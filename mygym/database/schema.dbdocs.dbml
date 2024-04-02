@@ -11,7 +11,9 @@ Project MyGym {
 Table user as U {
         id int [pk, increment]
         name varchar
-        email string
+        email varchar
+        role varchar [ default: 'member', note: 'member, instructor, or admin']
+
 }
 
 Table class_types {

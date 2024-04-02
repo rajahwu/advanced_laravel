@@ -1,0 +1,30 @@
+Project MyGym {
+    database_type: 'PostgreSQL'
+    Note: '''
+        # LinkedIn Learning: Advanced Laravel
+ 
+        Course Project
+    '''       
+}
+
+
+Table user as U {
+        id int [pk, increment]
+        name varchar
+        email string
+}
+
+Table class_types {
+    id int [pk, increment]
+    name varchar 
+    description text
+    minutes int
+}
+
+Table scheduled_classes {
+    id int [pk, increment]
+    type_id int [ref: > class_types.id]
+    date_time datetime [default: `now()`]
+    instructor_id int [ref: > U.id]
+}
+

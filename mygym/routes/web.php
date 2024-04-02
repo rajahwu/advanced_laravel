@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScheduledClassController;
+use App\Http\Controllers\BookingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,9 +20,18 @@ Route::resource('/instructor/schedule', ScheduledClassController::class)
 ->middleware(['auth', 'role:instructor'])
 ->only('index', 'create', 'store', 'destroy');
 
-Route::get('/member/dashboard', function () {
-    return view('member.dashboard');
-})->middleware(['auth', 'role:member'])->name('member.dashboard');
+
+
+Route::middleware(['auth','role:member'])->group(function() {
+    Route::get('/member/dashboard', function () {
+        return view('member.dashboard');
+    })->name('member.dashboard');
+    Route::get('/member/book', [BookingController::class, 'create'])->name('booking.create');
+    Route::post('/member/bookings', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/member/bookings', [BookingController::class, 'index'])->name('booking.index');
+    Route::delete('/member/bookings/{id}', [BookingController::class, 'destroy'])->name('booking.destroy');
+});
+
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');

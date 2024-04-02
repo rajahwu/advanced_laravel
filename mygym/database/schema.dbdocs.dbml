@@ -30,3 +30,10 @@ Table scheduled_classes {
     instructor_id int [ref: > U.id]
 }
 
+Table bookings {
+    id int [pk, increment]
+    user_id int [ref: > U.id ]
+    scheduled_class_id int [ref: > scheduled_classes.id]
+
+}
+
